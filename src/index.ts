@@ -6,4 +6,4 @@ const app = express()
 
 app.use(express.json())
 app.use('/swagger', swagger.serve, swagger.setup(json))
-app.listen(80, ()=> console.log('running port 8090'))
+app.listen(80, ()=> console.log('running port 80'))
