@@ -1,0 +1,316 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Api tranferência GED",
+        "description": "Essa api foi desenvolvida para que seja possível enviar e consultar documentos GED (Gestão eletronica de documenentos) através de requisições com protocolo HTTP",
+        "contact": {
+            "email": "gabriel.vicente@lojasedmil.com.br"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8080/datasnap/rest/TPortalController/"
+        }
+    ],
+    "paths": {
+        "/EnviaArquivoGED": {
+            "post": {
+                "summary": "Envia Arquivo GED",
+                "description": "Realiza o envio dos arquivos para o GED",
+                "tags": [
+                    "Upload"
+                ],
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "usuarioId": {
+                                        "type": "number",
+                                        "description": "Id usuário tabela T003USUARIOS"
+                                    },
+                                    "formato": {
+                                        "type": "string",
+                                        "description": "Formato arquivo (.pdf,.png,.jpg)"
+                                    },
+                                    "referencia": {
+                                        "type": "string",
+                                        "description": "Chave de referência, ex: CPF"
+                                    },
+                                    "idTipoDocumento": {
+                                        "type": "number",
+                                        "description": "Tipo documento tabela T201TIPODOCUMENTO"
+                                    },
+                                    "idCampoDocumento": {
+                                        "type": "number",
+                                        "description": "Campo documento tabela T206CAMPOSDOC"
+                                    },
+                                    "base64": {
+                                        "type": "string",
+                                        "description": "Arquivo que deseja enviar criptografado em Base64"
+                                    }
+                                }
+                            },
+                            "examples": {
+                                "default": {
+                                    "value": {
+                                        "usuarioId": 7496,
+                                        "formato": ".pdf",
+                                        "referencia": "13476619648",
+                                        "idTipoDocumento": 1,
+                                        "idCampoDocumento": 1,
+                                        "base64": ""
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "hash": {
+                                            "type": "string"
+                                        },
+                                        "idArquivo": {
+                                            "type": "number"
+                                        },
+                                        "idDocumento": {
+                                            "type": "number"
+                                        },
+                                        "sucesso": {
+                                            "type": "boolean"
+                                        }
+                                    }
+                                }, "examples": {
+                                    "default": {
+                                        "value": {
+                                            "hash": "F3012835B0CCC4F3A9A8E1F07A417114",
+                                            "idArquivo": 5655620,
+                                            "idDocumento": 4436170,
+                                            "sucesso": true
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request - Dados da requisição incorretos, revisar!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "sucesso": {
+                                            "type": "boolean"
+                                        },
+                                        "mensagem": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "default": {
+                                        "value": {
+                                            "sucesso": false,
+                                            "mensagem": "Parametro formato não informado!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error - Erro durante processamento interno.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "sucesso": {
+                                            "type": "boolean"
+                                        },
+                                        "mensagem": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "default": {
+                                        "value": {
+                                            "sucesso": false,
+                                            "mensagem": "Ocorreu um erro interno ao realizar o envio para o GED!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/BaixaArquivosGed": {
+            "get": {
+                "summary": "Baixar Arquivos GED",
+                "description": "Realiza o download dos arquivos para o GED",
+                "tags": [
+                    "Download"
+                ],
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "referencia",
+                        "in": "path",
+                        "description": "Chave de referência, ex: CPF",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "somentePortal",
+                        "in": "path",
+                        "description": "Exibir somente documentos do Portal",
+                        "required": false,
+                        "type": "boolean"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "sucesso": {
+                                            "type": "boolean"
+                                        },
+                                        "arquivos": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "idArquivo": {
+                                                        "type": "number",
+                                                        "description": "ID do arquivo tabela T204ARQUIVO"
+                                                    },
+                                                    "idTipoDocumento": {
+                                                        "type": "number",
+                                                        "description": "Tipo documento tabela T201TIPODOCUMENTO"
+                                                    },
+                                                    "descricaoTipoDocumento": {
+                                                        "type": "string",
+                                                        "description": "Descricao do tipo documento"
+                                                    },
+                                                    "formato": {
+                                                        "type": "string",
+                                                        "description": "Formato arquivo (.pdf,.png,.jpg)"
+                                                    },
+                                                    "base64": {
+                                                        "type": "string",
+                                                        "description": "Arquivo criptografado em Base64"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }, "examples": {
+                                    "default": {
+                                        "value": {
+                                            "sucesso": true,
+                                            "arquivos": [
+                                                {
+                                                    "idArquivo": 5655555,
+                                                    "idTipoDocumento": 61,
+                                                    "descricaoTipoDocumento": "Foto do Cliente (SMS)",
+                                                    "formato": ".JPG",
+                                                    "base64": ""
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request - Parametros incorretos, revisar!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "sucesso": {
+                                            "type": "boolean"
+                                        },
+                                        "mensagem": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "default": {
+                                        "value": {
+                                            "sucesso": false,
+                                            "mensagem": "Parametro referencia não informado!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error - Erro durante processamento interno.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "sucesso": {
+                                            "type": "boolean"
+                                        },
+                                        "mensagem": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "default": {
+                                        "value": {
+                                            "sucesso": false,
+                                            "mensagem": "Ocorreu um erro interno ao realizar o download do arquivo GED!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "basicAuth": {
+                "type": "http",
+                "scheme": "basic"
+            }
+        }
+    }
+}
