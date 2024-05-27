@@ -1,0 +1,10 @@
+{
+    "compilerOptions": {
+        "outDir": "dist",
+        "target": "es5",
+        "module": "CommonJS",
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "resolveJsonModule": true
+    }
+}
