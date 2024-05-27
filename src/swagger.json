@@ -2,7 +2,7 @@
     "openapi": "3.0.0",
     "info": {
         "title": "Api tranferência GED",
-        "description": "Essa api foi desenvolvida para que seja possível enviar e consultar documentos GED (Gestão eletronica de documenentos) através de requisições com protocolo HTTP",
+        "description": "Essa api foi desenvolvida para que seja possível enviar e consultar documentos GED (Gestão eletronica de documentos) através de requisições com protocolo HTTP",
         "contact": {
             "email": "gabriel.vicente@lojasedmil.com.br"
         },
