@@ -1,7 +1,7 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Api tranferência GED",
+        "title": "Api transferência GED",
         "description": "Essa api foi desenvolvida para que seja possível enviar e consultar documentos GED (Gestão eletronica de documentos) através de requisições com protocolo HTTP",
         "contact": {
             "email": "gabriel.vicente@lojasedmil.com.br"
@@ -48,9 +48,22 @@
                                         "type": "number",
                                         "description": "Tipo documento tabela T201TIPODOCUMENTO"
                                     },
-                                    "idCampoDocumento": {
-                                        "type": "number",
-                                        "description":"Campo documento tabela T206CAMPOSDOC"
+                                    "campos": {
+                                        "type": "array",
+                                        "description":"Campos documento",
+                                        "items": {
+                                            "type":"object",
+                                            "properties":{
+                                                "idCampo": {
+                                                    "type":"number",
+                                                    "description":"Id do campo tabela T206CAMPOSDOC"
+                                                },
+                                                "valorCampo":{
+                                                    "type":"string",
+                                                    "description":"Id do campo tabela T207VALORCAMPO"
+                                                }
+                                            }
+                                        }
                                     },
                                     "base64": {
                                         "type": "string",
@@ -63,9 +76,22 @@
                                     "value": {
                                         "usuarioId": 7496,
                                         "formato": ".pdf",
-                                        "referencia": "13476619648",
-                                        "idTipoDocumento":1,
-                                        "idCampoDocumento":1,
+                                        "referencia": "10998623610",
+                                        "idTipoDocumento": 30,
+                                        "campos": [
+                                            {
+                                                "idCampo": 73,
+                                                "valorCampo": "Sim"
+                                            },
+                                            {
+                                                "idCampo": 74,
+                                                "valorCampo": "Não"
+                                            },
+                                            {
+                                                "idCampo": 75,
+                                                "valorCampo": "Não"
+                                            }
+                                        ],
                                         "base64": ""
                                     }
                                 }
