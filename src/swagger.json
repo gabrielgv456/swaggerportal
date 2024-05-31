@@ -10,7 +10,7 @@
     },
     "servers": [
         {
-            "url": "http://localhost:8080/datasnap/rest/TPortalController/"
+            "url": "http://localhost:8080/datasnap/rest/TGedController/"
         }
     ],
     "paths": {
@@ -56,11 +56,11 @@
                                             "properties":{
                                                 "idCampo": {
                                                     "type":"number",
-                                                    "description":"Id do campo tabela T206CAMPOSDOC"
+                                                    "description":"Id do campo na tabela T206CAMPOSDOC, que será gravado como field T207IDCAMPO"
                                                 },
                                                 "valorCampo":{
                                                     "type":"string",
-                                                    "description":"Id do campo tabela T207VALORCAMPO"
+                                                    "description":"Valor do field T207VALOR que deverá respeitar o tipo do campo (T206TIPOCAMPO: S - String| I - Inteiro| F - Float| D - Data | H - Hora | L - Lista)"
                                                 }
                                             }
                                         }
