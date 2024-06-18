@@ -34,32 +34,44 @@
                                 "properties": {
                                     "usuarioId": {
                                         "type": "number",
-                                        "description": "Id usuário tabela T003USUARIOS"
+                                        "description": "Id usuário tabela T003USUARIOS",
+                                        "required": true
                                     },
                                     "formato": {
                                         "type": "string",
-                                        "description": "Formato arquivo (.pdf,.png,.jpg)"
+                                        "description": "Formato arquivo (.pdf,.png,.jpg)",
+                                        "required": true
                                     },
                                     "referencia": {
                                         "type": "string",
-                                        "description": "Chave de referência, ex: CPF"
+                                        "description": "Chave de referência, ex: CPF",
+                                        "required": true
+                                    },
+                                    "idDocumento": {
+                                        "type": "string",
+                                        "description": "Id Documento T203IDOCUMENTO. Informe-o para inserir mais de um arquivo no mesmo documento",
+                                        "required": false
                                     },
                                     "idTipoDocumento": {
                                         "type": "number",
-                                        "description": "Tipo documento tabela T201TIPODOCUMENTO"
+                                        "description": "Tipo documento tabela T201TIPODOCUMENTO",
+                                        "required": true
                                     },
                                     "campos": {
                                         "type": "array",
                                         "description": "Campos documento",
+                                        "required": false,
                                         "items": {
                                             "type": "object",
                                             "properties": {
                                                 "idCampo": {
                                                     "type": "number",
+                                                    "required": true,
                                                     "description": "Id do campo na tabela T206CAMPOSDOC, que será gravado como field T207IDCAMPO"
                                                 },
                                                 "valorCampo": {
                                                     "type": "string",
+                                                    "required": true,
                                                     "description": "Valor do field T207VALOR que deverá respeitar o tipo do campo (T206TIPOCAMPO: S - String| I - Inteiro| F - Float| D - Data | H - Hora | L - Lista)"
                                                 }
                                             }
@@ -67,6 +79,7 @@
                                     },
                                     "base64": {
                                         "type": "string",
+                                        "required": true,
                                         "description": "Arquivo que deseja enviar criptografado em Base64"
                                     }
                                 }
