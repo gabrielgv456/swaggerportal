@@ -57,6 +57,11 @@
                                         "description": "Tipo documento tabela T201TIPODOCUMENTO",
                                         "required": true
                                     },
+                                    "idTipoArquivo": {
+                                        "type": "number",
+                                        "description": "Tipo documento tabela T2041TIPOARQUIVO: \n 1 - Documento de Identificação (frente) \n 2 - Documento de Identificação (verso) \n 3 - Comprovante de residência \n 4 - Comprovante de Renda",
+                                        "required": true
+                                    },
                                     "campos": {
                                         "type": "array",
                                         "description": "Campos documento",
@@ -91,6 +96,7 @@
                                         "formato": ".pdf",
                                         "referencia": "10998623610",
                                         "idTipoDocumento": 30,
+                                        "idTipoArquivo": 1,
                                         "campos": [
                                             {
                                                 "idCampo": 73,
@@ -216,15 +222,29 @@
                 "parameters": [
                     {
                         "name": "referencia",
-                        "in": "path",
+                        "in": "query",
                         "description": "Chave de referência, ex: CPF",
                         "required": true,
                         "type": "string"
                     },
                     {
                         "name": "somentePortal",
-                        "in": "path",
-                        "description": "Exibir somente documentos do Portal",
+                        "in": "query",
+                        "description": "Exibir somente documentos do Portal. Default = false",
+                        "required": false,
+                        "type": "boolean"
+                    },
+                    {
+                        "name": "idArquivo",
+                        "in": "query",
+                        "description": "Filtro pelo arquivo",
+                        "required": false,
+                        "type": "number"
+                    },
+                    {
+                        "name": "semBase64",
+                        "in": "query",
+                        "description": "Não retornar o base64 dos arquivos. Default = false",
                         "required": false,
                         "type": "boolean"
                     }
@@ -257,6 +277,14 @@
                                                         "type": "string",
                                                         "description": "Descricao do tipo documento"
                                                     },
+                                                    "idTipoArquivo": {
+                                                        "type": "number",
+                                                        "description": "Tipo documento tabela T2041TIPOARQUIVO"
+                                                    },
+                                                    "descricaoTipoArquivo": {
+                                                        "type": "string",
+                                                        "description": "Descricao do tipo arquivo"
+                                                    },
                                                     "formato": {
                                                         "type": "string",
                                                         "description": "Formato arquivo (.pdf,.png,.jpg)"
@@ -278,6 +306,8 @@
                                                     "idArquivo": 5655555,
                                                     "idTipoDocumento": 61,
                                                     "descricaoTipoDocumento": "Foto do Cliente (SMS)",
+                                                    "idTipoArquivo": 1,
+                                                    "descricaoTipoArquivo": "Documento de Identificação (frente)",
                                                     "formato": ".JPG",
                                                     "base64": ""
                                                 }
@@ -334,6 +364,32 @@
                                         "value": {
                                             "sucesso": false,
                                             "mensagem": "Ocorreu um erro interno ao realizar o download do arquivo GED!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found - Registro não encontrado.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "sucesso": {
+                                            "type": "boolean"
+                                        },
+                                        "mensagem": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "default": {
+                                        "value": {
+                                            "sucesso": false,
+                                            "mensagem": "Não foram encontrados arquivos com o parêmetro informado!"
                                         }
                                     }
                                 }
